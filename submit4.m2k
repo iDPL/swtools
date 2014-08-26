@@ -1,0 +1,34 @@
+universe = parallel
+
+executable = run.sh
+
+# Arguments are:
+# 1. Sending host
+# 2. File to send (on the sending host)
+# 3. Receiving host
+# 4. Location to write file (on the receiving host)
+arguments = murpa.rocksclusters.org /export/rocks/install/rolls/htcondor/8.2.1/x86_64/RedHat/RPMS/htcondor-8.2.1-4.x86_64.rpm komatsu.chtc.wisc.edu htcondor.rpm 
+
+requirements = (Machine == "komatsu.chtc.wisc.edu") 
+
+should_transfer_files = yes
+when_to_transfer_output = on_exit
+getenv = true
+
+output = m2k.out.$(cluster).$(Node)
+error  = m2k.err.$(cluster).$(Node)
+log    = m2k.log
+
+machine_count = 1
+#+WantRemoteIO = true
++WantIOProxy = true
+queue
+
+requirements = (Machine == "murpa.rocksclusters.org")
+should_transfer_files = yes
+when_to_transfer_output = on_exit
+getenv = true
+machine_count = 1
+#+WantRemoteIO = true
++WantIOProxy = true
+queue

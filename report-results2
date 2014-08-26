@@ -1,0 +1,2 @@
+#! /bin/sh
+condor_history -const ResultsFileSent=!=UNDEFINED -af ClusterId '"sent"' ResultsFileSent '"from"' ResultsHostSend '"to"' ResultsHostReceive 'ifThenElse(ResultFileReceived=?=TRUE,"successfully","unsuccessfully")' '"taking"' ResultTimeEnd-ResultTimeStart '"seconds"' '" at "' JobStartDate  |  awk '{DF=$NF; $NF=""; printf("%s", $0); system("date -d @" DF)}'
